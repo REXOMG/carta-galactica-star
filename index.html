@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <title>Nuestra Historia en la Fuerza</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
     height: 100vh;
-    background: radial-gradient(circle at bottom, #020111, #000000 70%);
+    background: radial-gradient(circle at center, #050b2e, #000000 80%);
     font-family: 'Montserrat', sans-serif;
     color: #ffffff;
     overflow: hidden;
@@ -19,59 +19,60 @@ body {
     align-items: center;
 }
 
-/* estrellas */
-body::before {
-    content: "";
+/* GALAXIA EN MOVIMIENTO */
+.space {
     position: fixed;
     width: 200%;
     height: 200%;
-    background: url("https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/img/stars.png") repeat;
-    opacity: 0.25;
-    animation: drift 120s linear infinite;
+    background:
+      url("https://i.imgur.com/9Qx6G6P.png") repeat,
+      radial-gradient(circle at center, rgba(120,120,255,0.15), transparent 60%);
+    animation: travel 120s linear infinite;
+    opacity: 0.6;
 }
 
-@keyframes drift {
+@keyframes travel {
     from { transform: translate(0,0); }
-    to { transform: translate(-800px,-800px); }
+    to { transform: translate(-1000px,-1000px); }
 }
 
+/* CARTA */
 .card {
-    background: rgba(0,0,0,0.7);
-    border: 1px solid rgba(255,232,31,0.4);
-    border-radius: 24px;
-    padding: 35px;
-    width: 380px;
+    background: rgba(0,0,0,0.72);
+    border: 1px solid rgba(255,232,31,0.6);
+    border-radius: 26px;
+    padding: 36px;
+    width: 400px;
     text-align: center;
-    box-shadow: 0 0 40px rgba(255,232,31,0.15);
+    box-shadow: 0 0 60px rgba(255,232,31,0.25);
     z-index: 2;
 }
 
 h1 {
     font-family: 'Orbitron', sans-serif;
     color: #ffe81f;
-    font-size: 22px;
-    margin-bottom: 10px;
+    font-size: 24px;
 }
 
 .subtitle {
     font-size: 14px;
-    opacity: 0.8;
-    margin-bottom: 20px;
+    opacity: 0.85;
+    margin-bottom: 22px;
 }
 
 input {
     width: 90%;
     padding: 12px;
-    border-radius: 12px;
+    border-radius: 14px;
     border: none;
     text-align: center;
     font-size: 15px;
 }
 
 button {
-    margin-top: 18px;
+    margin-top: 16px;
     padding: 10px 28px;
-    border-radius: 25px;
+    border-radius: 30px;
     border: none;
     background: #ffe81f;
     font-family: 'Orbitron', sans-serif;
@@ -79,55 +80,57 @@ button {
 }
 
 button:hover {
-    background: #fff3a0;
+    background: #fff2a8;
 }
 
 .message {
-    margin-top: 22px;
+    margin-top: 24px;
     display: none;
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 14.5px;
+    line-height: 1.75;
 }
 
-/* corazones */
-.heart {
+/* ESTRELLAS-CORAZÓN */
+.star {
     position: fixed;
     bottom: -20px;
-    font-size: 16px;
-    animation: float 7s linear infinite;
-    opacity: 0.7;
+    font-size: 14px;
+    animation: float 9s linear infinite;
+    opacity: 0.8;
 }
 
 @keyframes float {
-    from { transform: translateY(0); opacity: 0.7; }
-    to { transform: translateY(-120vh); opacity: 0; }
+    from { transform: translateY(0); opacity: 0.8; }
+    to { transform: translateY(-130vh); opacity: 0; }
 }
 
-/* sables */
+/* SABLES DE LUZ (AMBOS LADO LUMINOSO) */
 .saber {
     position: fixed;
     top: 50%;
     width: 4px;
-    height: 220px;
+    height: 260px;
     background: linear-gradient(to top, transparent, #00eaff, white);
-    box-shadow: 0 0 20px #00eaff;
-    animation: ignite 1.2s ease forwards;
+    box-shadow: 0 0 30px #00eaff;
+    animation: ignite 1.3s ease forwards;
 }
 
-.saber.red {
-    background: linear-gradient(to top, transparent, #ff2e2e, white);
-    box-shadow: 0 0 20px #ff2e2e;
+.saber2 {
+    background: linear-gradient(to top, transparent, #a8ff60, white);
+    box-shadow: 0 0 30px #a8ff60;
 }
 
 @keyframes ignite {
     from { height: 0; }
-    to { height: 220px; }
+    to { height: 260px; }
 }
 </style>
 </head>
 <body>
 
-<!-- Música Star Wars (oculta) -->
+<div class="space"></div>
+
+<!-- MÚSICA STAR WARS -->
 <iframe
   id="swMusic"
   width="0"
@@ -139,11 +142,14 @@ button:hover {
 
 <div class="card">
     <h1>Una Historia en la Fuerza</h1>
-    <div class="subtitle">Solo una persona puede abrir este mensaje</div>
+    <div class="subtitle">La Fuerza solo responde a un nombre</div>
 
     <input id="nameInput" placeholder="Escribe tu nombre">
     <br>
     <button onclick="checkName()">Sentir la Fuerza</button>
+
+    <br><br>
+    <button onclick="playMusic()">✨ Activar la Fuerza ✨</button>
 
     <div class="message" id="message"></div>
 </div>
@@ -151,9 +157,12 @@ button:hover {
 <script>
 const validNames = ["isabel", "norla isabel", "companchira"];
 
-function checkName() {
-    // Activar música al interactuar
+function playMusic() {
     document.getElementById("swMusic").src += "&autoplay=1";
+}
+
+function checkName() {
+    playMusic();
 
     const name = document.getElementById("nameInput").value.toLowerCase().trim();
     const message = document.getElementById("message");
@@ -161,16 +170,18 @@ function checkName() {
     if (validNames.includes(name)) {
         message.style.display = "block";
         message.innerHTML = `
-        <p>
         💛 <strong>Para el amor de mi vida</strong> 💛<br><br>
 
-        Gracias por estar conmigo.<br>
-        Por elegirme incluso en mis días difíciles.<br>
-        Por ser hogar, apoyo y calma.<br><br>
+        La Fuerza nos unió cuando menos lo esperaba,<br>
+        y desde entonces camina con nosotros.<br><br>
 
-        Contigo aprendí que el amor verdadero<br>
-        no promete perfección,<br>
-        promete compañía.<br><br>
+        Gracias por quedarte,<br>
+        por elegirme incluso cuando dudo,<br>
+        por ser hogar, calma y apoyo.<br><br>
+
+        Contigo entendí que el amor verdadero<br>
+        no busca perfección,<br>
+        busca permanecer.<br><br>
 
         En todas las galaxias eras tú.<br>
         En todas las vidas eras tú.<br><br>
@@ -179,37 +190,34 @@ function checkName() {
         Enamorados desde todas nuestras vidas,<br>
         pero en esta llevamos desde el 10/02/2024.
         </strong>
-        </p>`;
-        hearts();
+        `;
+        stars();
         sabers();
     } else {
         message.style.display = "block";
-        message.innerHTML = `
-        ❌ Solo hay un amor de mi vida.<br>
-        Y la Fuerza no se equivoca.
-        `;
+        message.innerHTML = `❌ Solo hay un amor de mi vida.<br>Y la Fuerza no se equivoca.`;
     }
 }
 
-function hearts() {
+function stars() {
     setInterval(() => {
-        const h = document.createElement("div");
-        h.className = "heart";
-        h.innerHTML = "💛";
-        h.style.left = Math.random() * 100 + "vw";
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 8000);
+        const s = document.createElement("div");
+        s.className = "star";
+        s.innerHTML = "✨";
+        s.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 9000);
     }, 700);
 }
 
 function sabers() {
     const s1 = document.createElement("div");
     s1.className = "saber";
-    s1.style.left = "40%";
+    s1.style.left = "38%";
 
     const s2 = document.createElement("div");
-    s2.className = "saber red";
-    s2.style.right = "40%";
+    s2.className = "saber saber2";
+    s2.style.right = "38%";
 
     document.body.appendChild(s1);
     document.body.appendChild(s2);
